@@ -6,47 +6,75 @@
 //  Copyright (c) 2015 Suyeol Jeon. All rights reserved.
 //
 
-import TheAmazingAudioEngine
+import CoreBluetooth
 import UIKit
 
-class ViewController: UIViewController {
+public class ViewController: UIViewController {
 
-    var point = UIView()
+    public var textView: UITextView!
+    public var sendButton: UIButton!
 
-    override func viewDidLoad() {
+    public var peer: Peer!
+    public var receivedPacketsByName: [String: Packet]!
+
+
+    public override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.point.backgroundColor = UIColor.redColor()
-        self.point.frame.size.width = 10
-        self.point.frame.size.height = 10
-        self.point.center.x = self.view.bounds.size.width / 2
-        self.point.center.y = self.view.bounds.size.height / 2
-        self.point.layer.cornerRadius = 5
-        self.point.layer.rasterizationScale = UIScreen.mainScreen().scale
-        self.point.layer.shouldRasterize = true
-        self.view.addSubview(self.point)
+        self.peer = Peer()
+        self.peer.delegate = self
+        self.peer.channel = "00"
+        self.peer.name = "전수열"
 
-        println("Start receiving audio")
-        let audioDescription = AEAudioController.nonInterleaved16BitStereoAudioDescription()
-        let audioController = AEAudioController(audioDescription: audioDescription, inputEnabled: true)
-        audioController.start(nil)
-        let receiver = AEBlockAudioReceiver { source, time, frames, audio in
-            let buffers = UnsafeMutableAudioBufferListPointer(audio)
-            for buffer in buffers {
-                let dataPointer = UnsafePointer<Int16>(buffer.mData)
-                let dataLength = Int(buffer.mDataByteSize) / sizeof(Int16)
-                let data = UnsafeBufferPointer<Int16>(start:dataPointer, count: dataLength)
-                for i in 0..<data.count {
-                    let datum = data[i]
-                    let delta = CGFloat(datum) / 10
-                    println(delta)
-                    dispatch_async(dispatch_get_main_queue()) {
-                        self.point.center.y = self.view.bounds.size.height / 2 + delta
-                    }
-                }
-            }
+        self.receivedPacketsByName = [:]
+
+        self.textView = UITextView(frame: self.view.bounds)
+        self.textView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+        self.textView.contentInset.top = 20
+        self.textView.editable = false
+        self.textView.alwaysBounceVertical = true
+        self.view.addSubview(self.textView)
+
+        self.sendButton = UIButton(type: .System)
+        self.sendButton.frame.origin.x = 100
+        self.sendButton.frame.origin.y = 100
+        self.sendButton.enabled = false
+        self.sendButton.setTitle("Send", forState: .Normal)
+        self.sendButton.sizeToFit()
+        self.sendButton.addTarget(self, action: "send", forControlEvents: .TouchUpInside)
+        self.view.addSubview(self.sendButton)
+    }
+
+    public func updateConsole() {
+        var text = ""
+        for (name, packet) in receivedPacketsByName {
+            text += "\(name): \(packet.card!.rawValue)"
         }
-        audioController.addInputReceiver(receiver)
+        self.textView.text = text
+    }
+
+    public func send() {
+        self.peer.startBroadcasting(.Coffee)
+    }
+
+}
+
+
+extension ViewController: PeerDelegate {
+
+    public func peerDidBecomeActive(peer: Peer) {
+        self.sendButton.enabled = true
+    }
+
+    public func peerDidBecomeInactive(peer: Peer) {
+        self.sendButton.enabled = false
+    }
+
+    public func peer(peer: Peer, didReceivePacket packet: Packet) {
+        if let name = packet.name {
+            self.receivedPacketsByName[name] = packet
+            self.updateConsole()
+        }
     }
 
 }
