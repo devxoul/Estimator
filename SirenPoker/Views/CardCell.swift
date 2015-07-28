@@ -12,7 +12,7 @@ public class CardCell: UICollectionViewCell {
 
     public struct Font {
         static let nameLabel = UIFont.systemFontOfSize(14)
-        static let cardLabel = UIFont.systemFontOfSize(80)
+        static let cardLabel = UIFont.systemFontOfSize(64)
     }
 
     internal var nameLabel: UILabel!
@@ -71,7 +71,7 @@ public class CardCell: UICollectionViewCell {
         self.cardLabel.sizeToFit()
         self.cardLabel.bounds.size.width = self.bounds.width
         self.cardLabel.center.x = self.bounds.width / 2
-        self.cardLabel.center.y = (self.bounds.height - self.nameLabel.bounds.height) / 2
+        self.cardLabel.center.y = (self.bounds.height + self.nameLabel.bounds.height) / 2
     }
 
 }
