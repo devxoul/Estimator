@@ -20,23 +20,53 @@ public enum Card: Int {
     case Twenty
     case Fourty
     case Hundred
-
-//    case Number0
-//    case Number0_5
-//    case Number1
-//    case Number2
-//    case Number3
-//    case Number5
-//    case Number8
-//    case Number13
-//    case Number20
-//    case Number40
-//    case Number100
-
     case QuestionMark
     case Coffee
 
     public var stringValue: String {
         return String(self.rawValue)
     }
+
+    public var text: String {
+        switch self {
+        case .Zero: return "0"
+        case .Half: return "0.5"
+        case .One: return "1"
+        case .Two: return "2"
+        case .Three: return "3"
+        case .Five: return "5"
+        case .Eight: return "8"
+        case .Thirteen: return "13"
+        case .Twenty: return "20"
+        case .Fourty: return "40"
+        case .Hundred: return "100"
+        case .QuestionMark: return "?"
+        case .Coffee: return "Coffee"
+        }
+    }
+
+    public static let allValues: [Card] = [
+        .Zero,
+        .Half,
+        .One,
+        .Two,
+        .Three,
+        .Five,
+        .Eight,
+        .Thirteen,
+        .Twenty,
+        .Fourty,
+        .Hundred,
+        .QuestionMark,
+        .Coffee
+    ]
+}
+
+
+extension Card: CustomStringConvertible {
+
+    public var description: String {
+        return "<Card: \(self.text)>"
+    }
+
 }

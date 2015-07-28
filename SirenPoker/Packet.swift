@@ -61,7 +61,8 @@ public struct Packet: Equatable {
 extension Packet: CustomStringConvertible {
 
     public var description: String {
-        return self.encode()
+        let components = [self.version, self.channel, self.name, self.card?.description].map { $0 ?? "" }
+        return delimiter.join(components)
     }
 
 }
