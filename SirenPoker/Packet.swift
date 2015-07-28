@@ -17,15 +17,17 @@ public struct Packet: Equatable {
     public var channel: String? // 2byte
     public var name: String?
     public var card: Card?
+    public var receivedAt: NSDate?
 
-    public init(version: String, channel: String, name: String, card: Card) {
+
+    public init(version: String, channel: String, name: String, card: Card?) {
         self.version = version
         self.channel = channel
         self.name = name
         self.card = card
     }
 
-    public init(channel: String, name: String, card: Card) {
+    public init(channel: String, name: String, card: Card?) {
         self.version = latestVersion
         self.channel = channel
         self.name = name
@@ -38,11 +40,9 @@ public struct Packet: Equatable {
             let version = components[0]
             let channel = components[1]
             let name = components[2]
-            let card: Card
+            var card: Card? = nil
             if let rawValue = Int(components[3]) {
                 card = Card(rawValue: rawValue) ?? Card.QuestionMark
-            } else {
-                card = Card.QuestionMark
             }
             self.init(version: version, channel: channel, name: name, card: card)
         } else {

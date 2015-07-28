@@ -32,7 +32,7 @@ public class DeckViewController: UIViewController {
         scrollerFrame.size.height = itemSize.height
 
         self.scroller = HScroller(frame: scrollerFrame)
-        self.scroller.center.y = self.view.bounds.size.height / 2 + 64
+        self.scroller.center.y = (self.view.bounds.size.height + 64) / 2
         self.scroller.delegate = self
         self.scroller.itemSize = itemSize
         self.scroller.contentInset = Metric.scrollerContentInset

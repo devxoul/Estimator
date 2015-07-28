@@ -49,7 +49,7 @@ public class Peer: NSObject {
         self.name = name
     }
 
-    public func startBroadcasting(card: Card) {
+    public func startBroadcasting(card: Card?) {
         if let channel = self.channel, name = self.name {
             let packet = Packet(channel: channel, name: name, card: card)
             self.startBroadcasting(packet)

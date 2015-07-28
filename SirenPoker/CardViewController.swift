@@ -8,6 +8,8 @@
 
 import UIKit
 
+let timeout: NSTimeInterval = 3
+
 public class CardViewController: UIViewController {
 
     public var peer: Peer!
@@ -21,6 +23,7 @@ public class CardViewController: UIViewController {
 
     internal var cardView: CardCell!
     internal var scroller: HScroller!
+    internal var garbageCollector: NSTimer!
 
     public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -32,6 +35,15 @@ public class CardViewController: UIViewController {
         self.peer.name = "전수열"
 
         self.receivedPacketsByName = [:]
+
+        self.garbageCollector = NSTimer(
+            timeInterval: 1,
+            target: self,
+            selector: "collectGarbages",
+            userInfo: nil,
+            repeats: true
+        )
+        NSRunLoop.currentRunLoop().addTimer(self.garbageCollector, forMode: NSRunLoopCommonModes)
 
         //
         // Card View
@@ -69,6 +81,11 @@ public class CardViewController: UIViewController {
 
     public override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
+        self.garbageCollector.invalidate()
+        self.peer.startBroadcasting(nil)
+    }
+
+    public override func viewDidDisappear(animated: Bool) {
         self.peer.stopBroadcasting()
     }
 
@@ -78,6 +95,20 @@ public class CardViewController: UIViewController {
 
     internal func cardDidSet() {
         self.cardView.card = self.card
+    }
+
+    public func collectGarbages() {
+        for (name, packet) in self.receivedPacketsByName {
+            if abs(packet.receivedAt?.timeIntervalSinceNow ?? timeout) >= timeout {
+                self.removeName(name)
+            }
+        }
+        self.scroller.reloadData()
+    }
+
+    public func removeName(name: String) {
+        self.receivedPacketsByName.removeValueForKey(name)
+        NSLog("Remove '\(name)'")
     }
 
 }
@@ -95,10 +126,15 @@ extension CardViewController: PeerDelegate {
 
     }
 
-    public func peer(peer: Peer, didReceivePacket packet: Packet) {
+    public func peer(peer: Peer, var didReceivePacket packet: Packet) {
         if let name = packet.name {
-            self.receivedPacketsByName[name] = packet
-            self.scroller.reloadData()
+            if packet.card != nil {
+                packet.receivedAt = NSDate()
+                self.receivedPacketsByName[name] = packet
+                self.scroller.reloadData()
+            } else {
+                self.removeName(name)
+            }
         }
     }
     
