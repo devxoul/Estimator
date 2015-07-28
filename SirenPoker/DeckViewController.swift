@@ -22,6 +22,12 @@ public class DeckViewController: UIViewController {
         super.viewDidLoad()
 
         self.navigationItem.title = "Planning Poker"
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(
+            barButtonSystemItem: .Edit,
+            target: self,
+            action: "editButtonDidTap"
+        )
+
         self.automaticallyAdjustsScrollViewInsets = false
 
         var itemSize = self.view.bounds.size
@@ -40,6 +46,22 @@ public class DeckViewController: UIViewController {
         self.scroller.canScrollMultiplePages = true
         self.scroller.registerClass(CardCell.self)
         self.view.addSubview(self.scroller)
+    }
+
+    public func editButtonDidTap() {
+        let alertController = UIAlertController(title: "Edit Name", message: nil, preferredStyle: .Alert)
+        alertController.addTextFieldWithConfigurationHandler { textField in
+            textField.placeholder = "New name"
+            textField.text = NSUserDefaults.standardUserDefaults().stringForKey(UserDefaultsNameKey)
+        }
+        alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+        alertController.addAction(UIAlertAction(title: "OK", style: .Default) { _ in
+            let textField = alertController.textFields![0]
+            textField.resignFirstResponder()
+            NSUserDefaults.standardUserDefaults().setValue(textField.text, forKey: UserDefaultsNameKey)
+            NSUserDefaults.standardUserDefaults().synchronize()
+        })
+        self.presentViewController(alertController, animated: true, completion: nil)
     }
 }
 

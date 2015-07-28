@@ -32,7 +32,7 @@ public class CardViewController: UIViewController {
         self.peer = Peer()
         self.peer.delegate = self
         self.peer.channel = "00"
-        self.peer.name = "전수열"
+        self.peer.name = NSUserDefaults.standardUserDefaults().stringForKey(UserDefaultsNameKey) ?? "NoName"
 
         self.receivedPacketsByName = [:]
 
