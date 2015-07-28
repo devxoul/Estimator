@@ -39,10 +39,8 @@ public class CardCell: UICollectionViewCell {
         self.nameLabel = UILabel()
         self.nameLabel.font = Font.nameLabel
         self.nameLabel.textAlignment = .Center
-        self.nameLabel.adjustsFontSizeToFitWidth = true
 
         self.cardLabel = UILabel(frame: self.bounds)
-        self.cardLabel.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
         self.cardLabel.font = Font.cardLabel
         self.cardLabel.textAlignment = .Center
         self.cardLabel.adjustsFontSizeToFitWidth = true
@@ -67,7 +65,13 @@ public class CardCell: UICollectionViewCell {
         super.layoutSubviews()
 
         self.nameLabel.sizeToFit()
-        self.nameLabel.bounds.size.width = self.contentView.bounds.size.width
+        self.nameLabel.bounds.size.width = self.bounds.width
+        self.nameLabel.center.x = self.bounds.width / 2
+
+        self.cardLabel.sizeToFit()
+        self.cardLabel.bounds.size.width = self.bounds.width
+        self.cardLabel.center.x = self.bounds.width / 2
+        self.cardLabel.center.y = (self.bounds.height - self.nameLabel.bounds.height) / 2
     }
 
 }

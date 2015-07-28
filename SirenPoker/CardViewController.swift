@@ -107,8 +107,9 @@ public class CardViewController: UIViewController {
     }
 
     public func removeName(name: String) {
-        self.receivedPacketsByName.removeValueForKey(name)
-        NSLog("Remove '\(name)'")
+        if self.receivedPacketsByName.removeValueForKey(name) != nil {
+            NSLog("Remove '\(name)'")
+        }
     }
 
 }
