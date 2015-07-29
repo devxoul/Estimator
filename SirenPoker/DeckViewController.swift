@@ -23,9 +23,10 @@ public class DeckViewController: UIViewController {
 
         self.navigationItem.title = "Planning Poker"
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(
-            barButtonSystemItem: .Edit,
+            title: nil, // will be set in `viewWillAppear:`
+            style: UIBarButtonItemStyle.Plain,
             target: self,
-            action: "editButtonDidTap"
+            action: "nameButtonDidTap"
         )
 
         self.automaticallyAdjustsScrollViewInsets = false
@@ -46,22 +47,41 @@ public class DeckViewController: UIViewController {
         self.scroller.canScrollMultiplePages = true
         self.scroller.registerClass(CardCell.self)
         self.view.addSubview(self.scroller)
+
+        NSNotificationCenter.defaultCenter().addObserver(self,
+            selector: "nameDidChange",
+            name: NotificationName.nameDidChange,
+            object: nil
+        )
     }
 
-    public func editButtonDidTap() {
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+
+    public override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.nameDidChange()
+    }
+
+    public func nameButtonDidTap() {
         let alertController = UIAlertController(title: "Edit Name", message: nil, preferredStyle: .Alert)
         alertController.addTextFieldWithConfigurationHandler { textField in
             textField.placeholder = "New name"
-            textField.text = NSUserDefaults.standardUserDefaults().stringForKey(UserDefaultsNameKey)
+            textField.text = UserDefaults.name
         }
         alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
         alertController.addAction(UIAlertAction(title: "OK", style: .Default) { _ in
             let textField = alertController.textFields![0]
             textField.resignFirstResponder()
-            NSUserDefaults.standardUserDefaults().setValue(textField.text, forKey: UserDefaultsNameKey)
-            NSUserDefaults.standardUserDefaults().synchronize()
+            UserDefaults.name = textField.text
+            UserDefaults.synchronize()
         })
         self.presentViewController(alertController, animated: true, completion: nil)
+    }
+
+    public func nameDidChange() {
+        self.navigationItem.leftBarButtonItem?.title = UserDefaults.name ?? "No name"
     }
 }
 

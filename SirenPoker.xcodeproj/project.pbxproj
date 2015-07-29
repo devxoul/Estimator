@@ -15,6 +15,7 @@
 		03ADD75F1B67E3D1000753FC /* CardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03ADD75E1B67E3D1000753FC /* CardCell.swift */; };
 		03ADD7611B67E74F000753FC /* CardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03ADD7601B67E74F000753FC /* CardViewController.swift */; };
 		03ADD7631B67F6CB000753FC /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03ADD7621B67F6CB000753FC /* UserDefaults.swift */; };
+		03ADD7651B6895AE000753FC /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03ADD7641B6895AE000753FC /* Notification.swift */; };
 		03BFC5541B622DE000C290FE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BFC5531B622DE000C290FE /* AppDelegate.swift */; };
 		03BFC5561B622DE000C290FE /* DeckViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BFC5551B622DE000C290FE /* DeckViewController.swift */; };
 		03BFC55B1B622DE000C290FE /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 03BFC55A1B622DE000C290FE /* Images.xcassets */; };
@@ -41,6 +42,7 @@
 		03ADD75E1B67E3D1000753FC /* CardCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardCell.swift; sourceTree = "<group>"; };
 		03ADD7601B67E74F000753FC /* CardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardViewController.swift; sourceTree = "<group>"; };
 		03ADD7621B67F6CB000753FC /* UserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
+		03ADD7641B6895AE000753FC /* Notification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
 		03BFC54E1B622DDF00C290FE /* SirenPoker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SirenPoker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		03BFC5521B622DDF00C290FE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		03BFC5531B622DE000C290FE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -113,6 +115,7 @@
 				038333E91B66933E00FE2681 /* Card.swift */,
 				038333E71B66932300FE2681 /* Packet.swift */,
 				03ADD7621B67F6CB000753FC /* UserDefaults.swift */,
+				03ADD7641B6895AE000753FC /* Notification.swift */,
 				03ADD75B1B67E2BA000753FC /* Views */,
 				03BFC55A1B622DE000C290FE /* Images.xcassets */,
 				03BFC55C1B622DE000C290FE /* LaunchScreen.xib */,
@@ -271,6 +274,7 @@
 				03ADD75D1B67E2BA000753FC /* HScroller.swift in Sources */,
 				03ADD7611B67E74F000753FC /* CardViewController.swift in Sources */,
 				03ADD7631B67F6CB000753FC /* UserDefaults.swift in Sources */,
+				03ADD7651B6895AE000753FC /* Notification.swift in Sources */,
 				038333EA1B66933E00FE2681 /* Card.swift in Sources */,
 				03BFC5541B622DE000C290FE /* AppDelegate.swift in Sources */,
 				038333EC1B66964A00FE2681 /* Peer.swift in Sources */,

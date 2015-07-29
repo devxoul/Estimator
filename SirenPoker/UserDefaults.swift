@@ -8,4 +8,29 @@
 
 import Foundation
 
-let UserDefaultsNameKey = "Name"
+public struct UserDefaultsKey {
+    static let name = "Name"
+}
+
+
+public class UserDefaults {
+
+    public class func sharedUserDefaults() -> NSUserDefaults {
+        return NSUserDefaults.standardUserDefaults()
+    }
+
+    public class func synchronize() {
+        self.sharedUserDefaults().synchronize()
+    }
+
+    public class var name: String? {
+        get {
+            return self.sharedUserDefaults().stringForKey(UserDefaultsKey.name)
+        }
+        set {
+            self.sharedUserDefaults().setValue(newValue, forKey: UserDefaultsKey.name)
+            NSNotificationCenter.defaultCenter().postNotificationName(NotificationName.nameDidChange, object: nil)
+        }
+    }
+
+}
