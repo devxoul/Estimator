@@ -7,6 +7,7 @@
 //
 
 import CoreGraphics
+import UIKit
 
 extension IntegerLiteralType {
     var f: CGFloat { return CGFloat(self) }
@@ -14,4 +15,12 @@ extension IntegerLiteralType {
 
 extension FloatLiteralType {
     var f: CGFloat { return CGFloat(self) }
+}
+
+
+func idiom(phoneValue: CGFloat, _ padValue: CGFloat) -> CGFloat {
+    if UIDevice.currentDevice().userInterfaceIdiom == .Phone {
+        return phoneValue
+    }
+    return padValue
 }

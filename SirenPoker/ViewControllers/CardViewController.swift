@@ -12,6 +12,10 @@ let timeout: NSTimeInterval = 3
 
 public class CardViewController: UIViewController {
 
+    public struct Metric {
+        static let scrollerItemHeight = idiom(88, 100)
+    }
+
     public var peer: Peer!
     public var receivedPacketsByName: [String: Packet]!
 
@@ -49,15 +53,17 @@ public class CardViewController: UIViewController {
         // Card View
         //
         self.cardView = CardView()
-        self.cardView.transform = CardView.transformThatFitsWidth(self.view.bounds.width)
+        self.cardView.transform = CardView.transformThatFits(self.view.bounds.size)
         self.cardView.frame.origin.y = 0
         self.view.addSubview(self.cardView)
 
         //
         // Scroller
         //
-        let itemHeight = self.view.bounds.height - self.cardView.bounds.maxY
-        let itemSize = CGSizeApplyAffineTransform(CardView.standardSize, CardView.transformThatFitsHeight(itemHeight))
+        let itemSize = CGSizeApplyAffineTransform(
+            CardView.standardSize,
+            CardView.transformThatFitsHeight(Metric.scrollerItemHeight)
+        )
 
         var scrollerFrame = self.view.bounds
         scrollerFrame.size.height = itemSize.height

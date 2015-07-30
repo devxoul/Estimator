@@ -6,18 +6,30 @@
 //  Copyright © 2015 Suyeol Jeon. All rights reserved.
 //
 
+import SwiftyColor
 import UIKit
 
-public class CardView: UIView {
+public final class CardView: UIView {
 
-    public struct Font {
-        static let nameLabel = UIFont.systemFontOfSize(60)
-        static let cardLabel = UIFont.systemFontOfSize(120)
+    internal struct Metric {
+        static let borderWidth = 1.f
+        static let cornerRadius = 10.f
     }
+
+    internal struct Font {
+        static let nameLabel = UIFont.systemFontOfSize(idiom(80, 160))
+        static let cardLabel = UIFont.systemFontOfSize(idiom(120, 240))
+    }
+
+    internal struct Color {
+        static let background = 0xEDEDED~
+        static let border = 0xCCCCCC~
+    }
+
 
     public static let standardSize = CGSize(
         width: UIScreen.mainScreen().bounds.width,
-        height: ceil(UIScreen.mainScreen().bounds.width * 3 / 2)
+        height: ceil(UIScreen.mainScreen().bounds.width * idiom(3 / 2, 4 / 3))
     )
 
     private var nameLabel: UILabel!
@@ -39,10 +51,10 @@ public class CardView: UIView {
     public override init(frame: CGRect) {
         super.init(frame: CGRect(origin: frame.origin, size: self.dynamicType.standardSize))
 
-        self.backgroundColor = UIColor.lightGrayColor()
-        self.layer.borderColor = UIColor.grayColor().CGColor
-        self.layer.borderWidth = 1 / UIScreen.mainScreen().scale
-        self.layer.cornerRadius = 5
+        self.backgroundColor = Color.background
+        self.layer.borderColor = Color.border.CGColor
+        self.layer.borderWidth = Metric.borderWidth
+        self.layer.cornerRadius = Metric.cornerRadius
 
         self.nameLabel = UILabel()
         self.nameLabel.font = Font.nameLabel

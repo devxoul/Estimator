@@ -12,7 +12,8 @@ import UIKit
 public class DeckViewController: UIViewController {
 
     public struct Metric {
-        static let scrollerContentInset: CGFloat = 40
+        static let scrollerContentInset = idiom(40, 80)
+        static let scrollerItemSpacing = idiom(10, 20)
     }
 
     public var scroller: HScroller!
@@ -41,6 +42,7 @@ public class DeckViewController: UIViewController {
         self.scroller.center.y = (self.view.bounds.size.height + 64) / 2
         self.scroller.delegate = self
         self.scroller.itemSize = itemSize
+        self.scroller.itemSpacing = Metric.scrollerItemSpacing
         self.scroller.contentInset = Metric.scrollerContentInset
         self.scroller.pagingEnabled = true
         self.scroller.canScrollMultiplePages = true
