@@ -6,7 +6,6 @@
 //  Copyright © 2015 Suyeol Jeon. All rights reserved.
 //
 
-import SwiftyColor
 import UIKit
 
 public final class CardView: UIView {

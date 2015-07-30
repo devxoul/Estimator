@@ -24,6 +24,8 @@
 		03DCA4051B69FA1400C3E303 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DCA4031B69FA1400C3E303 /* UserDefaults.swift */; };
 		03DCA40B1B6A050200C3E303 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DCA40A1B6A050200C3E303 /* CardView.swift */; };
 		03DCA40D1B6A050F00C3E303 /* CGFloatLiteral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DCA40C1B6A050F00C3E303 /* CGFloatLiteral.swift */; };
+		6F56B563504E2814F3B820DD /* SwiftyImage_SwiftyImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E7D2810258367F8967DE10 /* SwiftyImage_SwiftyImage.swift */; };
+		E4BD6872C5346C9F12C17003 /* SwiftyColor_SwiftyColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70EAC5462632CB23A0543B07 /* SwiftyColor_SwiftyColor.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +61,8 @@
 		03DCA40A1B6A050200C3E303 /* CardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		03DCA40C1B6A050F00C3E303 /* CGFloatLiteral.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGFloatLiteral.swift; sourceTree = "<group>"; };
 		50B5E6C40BF7301BCB28B747 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		65E7D2810258367F8967DE10 /* SwiftyImage_SwiftyImage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SwiftyImage_SwiftyImage.swift; path = Seeds/SwiftyImage/SwiftyImage/SwiftyImage_SwiftyImage.swift; sourceTree = "<group>"; };
+		70EAC5462632CB23A0543B07 /* SwiftyColor_SwiftyColor.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SwiftyColor_SwiftyColor.swift; path = Seeds/SwiftyColor/SwiftyColor/SwiftyColor_SwiftyColor.swift; sourceTree = "<group>"; };
 		C3E8B2B93026C94253CFCE0F /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		D87326FD6289BD6957E9D8CF /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -100,6 +104,7 @@
 				03BFC54F1B622DDF00C290FE /* Products */,
 				3E5AAD2B684B4FD35407729A /* Pods */,
 				34AEF6218A22388C9E961304 /* Frameworks */,
+				0739FA024AB80925B32D64D1 /* Seeds */,
 			);
 			sourceTree = "<group>";
 		};
@@ -190,6 +195,23 @@
 			path = Utils;
 			sourceTree = "<group>";
 		};
+		0739FA024AB80925B32D64D1 /* Seeds */ = {
+			isa = PBXGroup;
+			children = (
+				0DB3F3E669562196F3B61D99 /* SwiftyColor */,
+				A32DAFCA7B9F91AF70D115B2 /* SwiftyImage */,
+			);
+			name = Seeds;
+			sourceTree = "<group>";
+		};
+		0DB3F3E669562196F3B61D99 /* SwiftyColor */ = {
+			isa = PBXGroup;
+			children = (
+				70EAC5462632CB23A0543B07 /* SwiftyColor_SwiftyColor.swift */,
+			);
+			name = SwiftyColor;
+			sourceTree = "<group>";
+		};
 		34AEF6218A22388C9E961304 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -206,6 +228,14 @@
 				50B5E6C40BF7301BCB28B747 /* Pods.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		A32DAFCA7B9F91AF70D115B2 /* SwiftyImage */ = {
+			isa = PBXGroup;
+			children = (
+				65E7D2810258367F8967DE10 /* SwiftyImage_SwiftyImage.swift */,
+			);
+			name = SwiftyImage;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -322,6 +352,8 @@
 				03BFC5541B622DE000C290FE /* AppDelegate.swift in Sources */,
 				03DCA40B1B6A050200C3E303 /* CardView.swift in Sources */,
 				03DCA3FC1B69F9D000C3E303 /* Card.swift in Sources */,
+				E4BD6872C5346C9F12C17003 /* SwiftyColor_SwiftyColor.swift in Sources */,
+				6F56B563504E2814F3B820DD /* SwiftyImage_SwiftyImage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
