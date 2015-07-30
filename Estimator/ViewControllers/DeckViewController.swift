@@ -1,6 +1,6 @@
 //
 //  DeckViewController.swift
-//  SirenPoker
+//  Estimator
 //
 //  Created by 전수열 on 7/24/15.
 //  Copyright (c) 2015 Suyeol Jeon. All rights reserved.
@@ -22,7 +22,7 @@ public class DeckViewController: UIViewController {
     public override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.navigationItem.title = "Planning Poker"
+        self.navigationItem.title = "Estimator"
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(
             title: nil, // will be set in `viewWillAppear:`
             style: .Plain,

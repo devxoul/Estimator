@@ -1,6 +1,6 @@
 //
 //  Packet.swift
-//  SirenPoker
+//  Estimator
 //
 //  Created by 전수열 on 7/28/15.
 //  Copyright © 2015 Suyeol Jeon. All rights reserved.

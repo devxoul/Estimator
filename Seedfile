@@ -1,6 +1,6 @@
 swift_seedname_prefix!
 
-target 'SirenPoker' do
+target 'Estimator' do
     github 'devxoul/SwiftyColor', '0.1.3', :files => 'SwiftyColor/SwiftyColor.swift'
   github 'devxoul/SwiftyImage', 'swift-2.0', :files => 'SwiftyImage/SwiftyImage.swift'
 end

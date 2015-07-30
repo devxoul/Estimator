@@ -1,6 +1,6 @@
 //
 //  AppDelegate.swift
-//  SirenPoker
+//  Estimator
 //
 //  Created by 전수열 on 7/24/15.
 //  Copyright (c) 2015 Suyeol Jeon. All rights reserved.
