@@ -81,7 +81,7 @@ public class CardViewController: UIViewController {
     public override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         self.garbageCollector.invalidate()
-        self.peer.startBroadcasting(nil)
+        self.peer.startBroadcasting(.None)
     }
 
     public override func viewDidDisappear(animated: Bool) {
@@ -127,8 +127,8 @@ extension CardViewController: PeerDelegate {
     }
 
     public func peer(peer: Peer, var didReceivePacket packet: Packet) {
-        if let name = packet.name {
-            if packet.card != nil {
+        if let name = packet.name, card = packet.card {
+            if card != .None {
                 packet.receivedAt = NSDate()
                 self.receivedPacketsByName[name] = packet
                 self.scroller.reloadData()

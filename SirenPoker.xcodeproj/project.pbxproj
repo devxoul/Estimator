@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		035D34241B6A8D9300DFEF34 /* StringIndexUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035D34231B6A8D9300DFEF34 /* StringIndexUtils.swift */; };
 		035E208B1B664BA100B625E4 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 035E208A1B664BA100B625E4 /* CoreBluetooth.framework */; };
 		03ADD75D1B67E2BA000753FC /* HScroller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03ADD75C1B67E2BA000753FC /* HScroller.swift */; };
 		03ADD75F1B67E3D1000753FC /* CardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03ADD75E1B67E3D1000753FC /* CardCell.swift */; };
@@ -36,6 +37,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		035D34231B6A8D9300DFEF34 /* StringIndexUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringIndexUtils.swift; sourceTree = "<group>"; };
 		035E208A1B664BA100B625E4 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 		03ADD75C1B67E2BA000753FC /* HScroller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HScroller.swift; sourceTree = "<group>"; };
 		03ADD75E1B67E3D1000753FC /* CardCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardCell.swift; sourceTree = "<group>"; };
@@ -183,6 +185,7 @@
 				03DCA40C1B6A050F00C3E303 /* CGFloatLiteral.swift */,
 				03DCA4021B69FA1400C3E303 /* Notification.swift */,
 				03DCA4031B69FA1400C3E303 /* UserDefaults.swift */,
+				035D34231B6A8D9300DFEF34 /* StringIndexUtils.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -309,6 +312,7 @@
 				03ADD75F1B67E3D1000753FC /* CardCell.swift in Sources */,
 				03ADD75D1B67E2BA000753FC /* HScroller.swift in Sources */,
 				03DCA3FD1B69F9D000C3E303 /* Packet.swift in Sources */,
+				035D34241B6A8D9300DFEF34 /* StringIndexUtils.swift in Sources */,
 				03DCA4051B69FA1400C3E303 /* UserDefaults.swift in Sources */,
 				03DCA40D1B6A050F00C3E303 /* CGFloatLiteral.swift in Sources */,
 				03DCA4001B69F9E800C3E303 /* Peer.swift in Sources */,

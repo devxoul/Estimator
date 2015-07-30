@@ -9,14 +9,13 @@
 import Foundation
 
 private let latestVersion = "01"
-private let delimiter = ":"
 
 public struct Packet: Equatable {
 
-    public var version: String? // 2byte
-    public var channel: String? // 2byte
+    public var version: String? // 2 bytes
+    public var channel: String? // 2 bytes
+    public var card: Card?      // 2 bytes
     public var name: String?
-    public var card: Card?
     public var receivedAt: NSDate?
 
 
@@ -35,24 +34,20 @@ public struct Packet: Equatable {
     }
 
     public init?(encoded: String) {
-        let components = encoded.componentsSeparatedByString(delimiter)
-        if components.count == 4 {
-            let version = components[0]
-            let channel = components[1]
-            let name = components[2]
-            var card: Card? = nil
-            if let rawValue = Int(components[3]) {
-                card = Card(rawValue: rawValue) ?? Card.QuestionMark
-            }
-            self.init(version: version, channel: channel, name: name, card: card)
-        } else {
-            return nil
-        }
+        guard encoded.characters.count > 7 else { return nil }
+        guard let version = encoded[0..<2] else { return nil }
+        guard let channel = encoded[2..<4] else { return nil }
+        guard let card = encoded[4..<6], cardRawValue = Int(card, radix: 16) else { return nil }
+
+        self.version = version
+        self.channel = channel
+        self.card = Card(rawValue: cardRawValue)
+        self.name = encoded.substringFromIndex(advance(encoded.startIndex, 6))
     }
 
     public func encode() -> String {
-        let components = [self.version, self.channel, self.name, self.card?.stringValue].map { $0 ?? "" }
-        return delimiter.join(components)
+        let components = [self.version, self.channel, self.card?.hexValue, self.name].map { $0 ?? "" }
+        return "".join(components)
     }
 
 }
@@ -61,13 +56,13 @@ public struct Packet: Equatable {
 extension Packet: CustomStringConvertible {
 
     public var description: String {
-        let components = [self.version, self.channel, self.name, self.card?.description].map { $0 ?? "" }
-        return delimiter.join(components)
+        let components = [self.version, self.channel, self.card?.description, self.name].map { $0 ?? "" }
+        return ", ".join(components)
     }
 
 }
 
 
 public func == (lhs: Packet, rhs: Packet) -> Bool {
-    return lhs.version == rhs.version && lhs.channel == rhs.channel && lhs.name == rhs.name && lhs.card == rhs.card
+    return lhs.version == rhs.version && lhs.channel == rhs.channel && lhs.card == rhs.card && lhs.name == rhs.name
 }

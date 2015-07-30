@@ -9,39 +9,36 @@
 import Foundation
 
 public enum Card: Int {
-    case Zero
-    case Half
-    case One
-    case Two
-    case Three
-    case Five
-    case Eight
-    case Thirteen
-    case Twenty
-    case Fourty
-    case Hundred
-    case QuestionMark
-    case Coffee
+    case Zero = 0
+    case Half = 127
+    case One = 1
+    case Two = 2
+    case Three = 3
+    case Five = 5
+    case Eight = 8
+    case Thirteen = 13
+    case Twenty = 20
+    case Fourty = 40
+    case Hundred = 100
+    case QuestionMark = 0xFD
+    case Coffee = 0xFE
+    case None = 0xFF
 
-    public var stringValue: String {
-        return String(self.rawValue)
+    public var hexValue: String {
+        let hex = String(self.rawValue, radix: 16, uppercase: true)
+        if self.rawValue < 0xA {
+            return "0" + hex
+        }
+        return hex
     }
 
     public var text: String {
         switch self {
-        case .Zero: return "0"
-        case .Half: return "0.5"
-        case .One: return "1"
-        case .Two: return "2"
-        case .Three: return "3"
-        case .Five: return "5"
-        case .Eight: return "8"
-        case .Thirteen: return "13"
-        case .Twenty: return "20"
-        case .Fourty: return "40"
-        case .Hundred: return "100"
-        case .QuestionMark: return "?"
-        case .Coffee: return "Coffee"
+            case .Half: return "0.5"
+            case .QuestionMark: return "?"
+            case .Coffee: return "Coffee"
+            case .None: return "None"
+            default: return String(self.rawValue)
         }
     }
 

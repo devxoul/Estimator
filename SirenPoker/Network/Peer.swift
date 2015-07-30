@@ -49,7 +49,7 @@ public class Peer: NSObject {
         self.name = name
     }
 
-    public func startBroadcasting(card: Card?) {
+    public func startBroadcasting(card: Card) {
         if let channel = self.channel, name = self.name {
             let packet = Packet(channel: channel, name: name, card: card)
             self.startBroadcasting(packet)
@@ -69,9 +69,11 @@ public class Peer: NSObject {
             NSLog("[WARNING] Peer is not active. Skip broadcasting.")
             return
         }
+        let encoded = packet.encode()
+        NSLog("Start broadcasting: \(encoded)")
         self.peripheral.stopAdvertising()
         self.peripheral.startAdvertising([
-            CBAdvertisementDataLocalNameKey: packet.encode(),
+            CBAdvertisementDataLocalNameKey: encoded,
             CBAdvertisementDataServiceUUIDsKey: [CBUUID(string: serviceUUIDString)],
         ])
     }
