@@ -21,6 +21,7 @@ public final class CardView: UIView {
     }
 
     internal struct Color {
+        static let shadow = 0x0~50%
         static let background = 0xEDEDED~
         static let border = 0xCCCCCC~
     }
@@ -31,6 +32,7 @@ public final class CardView: UIView {
         height: ceil(UIScreen.mainScreen().bounds.width * idiom(3 / 2, 4 / 3))
     )
 
+    private var backgroundView: UIImageView!
     private var nameLabel: UILabel!
     private var cardLabel: UILabel!
 
@@ -50,10 +52,13 @@ public final class CardView: UIView {
     public override init(frame: CGRect) {
         super.init(frame: CGRect(origin: frame.origin, size: self.dynamicType.standardSize))
 
-        self.backgroundColor = Color.background
-        self.layer.borderColor = Color.border.CGColor
-        self.layer.borderWidth = Metric.borderWidth
-        self.layer.cornerRadius = Metric.cornerRadius
+        self.backgroundView = UIImageView(frame: self.bounds)
+        self.backgroundView.image = UIImage.resizable()
+                                           .color(Color.background)
+                                           .border(color: Color.border)
+                                           .border(width: Metric.borderWidth)
+                                           .corner(radius: Metric.cornerRadius)
+                                           .image()
 
         self.nameLabel = UILabel()
         self.nameLabel.font = Font.nameLabel
@@ -64,6 +69,7 @@ public final class CardView: UIView {
         self.cardLabel.textAlignment = .Center
         self.cardLabel.adjustsFontSizeToFitWidth = true
 
+        self.addSubview(self.backgroundView)
         self.addSubview(self.nameLabel)
         self.addSubview(self.cardLabel)
     }
