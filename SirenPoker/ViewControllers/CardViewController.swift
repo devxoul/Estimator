@@ -21,7 +21,7 @@ public class CardViewController: UIViewController {
         }
     }
 
-    internal var cardView: CardCell!
+    internal var cardView: CardView!
     internal var scroller: HScroller!
     internal var garbageCollector: NSTimer!
 
@@ -48,21 +48,20 @@ public class CardViewController: UIViewController {
         //
         // Card View
         //
-        var cardViewFrame = self.view.bounds
-        cardViewFrame.size.height -= 64
-        self.cardView = CardCell(frame: cardViewFrame)
+        self.cardView = CardView()
+        self.cardView.transform = CardView.transformThatFitsWidth(self.view.bounds.width)
+        self.cardView.frame.origin.y = 0
         self.view.addSubview(self.cardView)
 
         //
         // Scroller
         //
-        var itemSize = self.view.bounds.size
-        itemSize.width = 48
-        itemSize.height = 64
+        let itemHeight = self.view.bounds.height - self.cardView.bounds.maxY
+        let itemSize = CGSizeApplyAffineTransform(CardView.standardSize, CardView.transformThatFitsHeight(itemHeight))
 
         var scrollerFrame = self.view.bounds
         scrollerFrame.size.height = itemSize.height
-        scrollerFrame.origin.y = self.view.bounds.size.height - scrollerFrame.size.height
+        scrollerFrame.origin.y = self.view.bounds.size.height - itemSize.height
 
         self.scroller = HScroller(frame: scrollerFrame)
         self.scroller.delegate = self

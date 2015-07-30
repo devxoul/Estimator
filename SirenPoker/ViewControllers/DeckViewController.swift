@@ -24,16 +24,15 @@ public class DeckViewController: UIViewController {
         self.navigationItem.title = "Planning Poker"
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(
             title: nil, // will be set in `viewWillAppear:`
-            style: UIBarButtonItemStyle.Plain,
+            style: .Plain,
             target: self,
             action: "nameButtonDidTap"
         )
 
         self.automaticallyAdjustsScrollViewInsets = false
 
-        var itemSize = self.view.bounds.size
-        itemSize.width -= Metric.scrollerContentInset * 2
-        itemSize.height *= itemSize.width / self.view.bounds.size.width
+        let itemWidth = self.view.bounds.width - Metric.scrollerContentInset * 2
+        let itemSize = CGSizeApplyAffineTransform(CardView.standardSize, CardView.transformThatFitsWidth(itemWidth))
 
         var scrollerFrame = self.view.bounds
         scrollerFrame.size.height = itemSize.height

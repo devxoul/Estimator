@@ -21,6 +21,8 @@
 		03DCA4001B69F9E800C3E303 /* Peer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DCA3FF1B69F9E800C3E303 /* Peer.swift */; };
 		03DCA4041B69FA1400C3E303 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DCA4021B69FA1400C3E303 /* Notification.swift */; };
 		03DCA4051B69FA1400C3E303 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DCA4031B69FA1400C3E303 /* UserDefaults.swift */; };
+		03DCA40B1B6A050200C3E303 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DCA40A1B6A050200C3E303 /* CardView.swift */; };
+		03DCA40D1B6A050F00C3E303 /* CGFloatLiteral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DCA40C1B6A050F00C3E303 /* CGFloatLiteral.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +54,8 @@
 		03DCA3FF1B69F9E800C3E303 /* Peer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Peer.swift; sourceTree = "<group>"; };
 		03DCA4021B69FA1400C3E303 /* Notification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
 		03DCA4031B69FA1400C3E303 /* UserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
+		03DCA40A1B6A050200C3E303 /* CardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
+		03DCA40C1B6A050F00C3E303 /* CGFloatLiteral.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGFloatLiteral.swift; sourceTree = "<group>"; };
 		50B5E6C40BF7301BCB28B747 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		C3E8B2B93026C94253CFCE0F /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		D87326FD6289BD6957E9D8CF /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -79,6 +83,7 @@
 		03ADD75B1B67E2BA000753FC /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				03DCA40A1B6A050200C3E303 /* CardView.swift */,
 				03ADD75E1B67E3D1000753FC /* CardCell.swift */,
 				03ADD75C1B67E2BA000753FC /* HScroller.swift */,
 			);
@@ -175,6 +180,7 @@
 		03DCA4011B69FA1400C3E303 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				03DCA40C1B6A050F00C3E303 /* CGFloatLiteral.swift */,
 				03DCA4021B69FA1400C3E303 /* Notification.swift */,
 				03DCA4031B69FA1400C3E303 /* UserDefaults.swift */,
 			);
@@ -304,11 +310,13 @@
 				03ADD75D1B67E2BA000753FC /* HScroller.swift in Sources */,
 				03DCA3FD1B69F9D000C3E303 /* Packet.swift in Sources */,
 				03DCA4051B69FA1400C3E303 /* UserDefaults.swift in Sources */,
+				03DCA40D1B6A050F00C3E303 /* CGFloatLiteral.swift in Sources */,
 				03DCA4001B69F9E800C3E303 /* Peer.swift in Sources */,
 				03DCA3F71B69F9C300C3E303 /* CardViewController.swift in Sources */,
 				03DCA4041B69FA1400C3E303 /* Notification.swift in Sources */,
 				03DCA3F81B69F9C300C3E303 /* DeckViewController.swift in Sources */,
 				03BFC5541B622DE000C290FE /* AppDelegate.swift in Sources */,
+				03DCA40B1B6A050200C3E303 /* CardView.swift in Sources */,
 				03DCA3FC1B69F9D000C3E303 /* Card.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

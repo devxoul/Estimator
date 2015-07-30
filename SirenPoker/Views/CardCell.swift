@@ -10,68 +10,36 @@ import UIKit
 
 public class CardCell: UICollectionViewCell {
 
-    public struct Font {
-        static let nameLabel = UIFont.systemFontOfSize(14)
-        static let cardLabel = UIFont.systemFontOfSize(64)
-    }
-
-    internal var nameLabel: UILabel!
-    internal var cardLabel: UILabel!
+    private var cardView: CardView!
 
     public var name: String? {
-        didSet {
-            self.nameDidSet()
+        get {
+            return self.cardView.name
+        }
+        set {
+            self.cardView.name = newValue
         }
     }
     public var card: Card? {
         didSet {
-            self.cardDidSet()
+            self.cardView.card = self.card
         }
     }
 
     public override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = UIColor.lightGrayColor()
-        self.layer.borderColor = UIColor.grayColor().CGColor
-        self.layer.borderWidth = 1 / UIScreen.mainScreen().scale
-        self.layer.cornerRadius = 5
-
-        self.nameLabel = UILabel()
-        self.nameLabel.font = Font.nameLabel
-        self.nameLabel.textAlignment = .Center
-
-        self.cardLabel = UILabel(frame: self.bounds)
-        self.cardLabel.font = Font.cardLabel
-        self.cardLabel.textAlignment = .Center
-        self.cardLabel.adjustsFontSizeToFitWidth = true
-
-        self.contentView.addSubview(self.nameLabel)
-        self.contentView.addSubview(self.cardLabel)
+        self.cardView = CardView()
+        self.contentView.addSubview(self.cardView)
     }
 
     public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    internal func nameDidSet() {
-        self.nameLabel.text = self.name
-    }
-
-    internal func cardDidSet() {
-        self.cardLabel.text = self.card?.text
-    }
-
     public override func layoutSubviews() {
         super.layoutSubviews()
-
-        self.nameLabel.sizeToFit()
-        self.nameLabel.bounds.size.width = self.bounds.width
-        self.nameLabel.center.x = self.bounds.width / 2
-
-        self.cardLabel.sizeToFit()
-        self.cardLabel.bounds.size.width = self.bounds.width
-        self.cardLabel.center.x = self.bounds.width / 2
-        self.cardLabel.center.y = (self.bounds.height + self.nameLabel.bounds.height) / 2
+        self.cardView.transform = CardView.transformThatFits(self.bounds.size)
+        self.cardView.center = CGPoint(x: self.bounds.width / 2, y: self.bounds.height / 2)
     }
 
 }
