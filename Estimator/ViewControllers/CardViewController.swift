@@ -13,7 +13,7 @@ let timeout: NSTimeInterval = 3
 public class CardViewController: UIViewController {
 
     public struct Metric {
-        static let scrollerItemHeight = idiom(88, 100)
+        static let scrollerItemHeight = idiom(68, 100)
     }
 
     public var peer: Peer!
@@ -29,9 +29,14 @@ public class CardViewController: UIViewController {
     internal var scroller: HScroller!
     internal var garbageCollector: NSTimer!
 
+    private var transitionAnimator: BlurTransitionAnimator!
+
+
     public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        self.view.backgroundColor = UIColor.whiteColor()
+        self.transitionAnimator = BlurTransitionAnimator()
+        self.transitioningDelegate = self.transitionAnimator
+        self.modalPresentationStyle = .Custom
 
         self.peer = Peer()
         self.peer.delegate = self
@@ -50,14 +55,6 @@ public class CardViewController: UIViewController {
         NSRunLoop.currentRunLoop().addTimer(self.garbageCollector, forMode: NSRunLoopCommonModes)
 
         //
-        // Card View
-        //
-        self.cardView = CardView()
-        self.cardView.transform = CardView.transformThatFits(self.view.bounds.size)
-        self.cardView.frame.origin.y = 0
-        self.view.addSubview(self.cardView)
-
-        //
         // Scroller
         //
         let itemSize = CGSizeApplyAffineTransform(
@@ -65,14 +62,25 @@ public class CardViewController: UIViewController {
             CardView.transformThatFitsHeight(Metric.scrollerItemHeight)
         )
 
+        let statusBarHeight = UIApplication.sharedApplication().statusBarFrame.height
+
         var scrollerFrame = self.view.bounds
         scrollerFrame.size.height = itemSize.height
-        scrollerFrame.origin.y = self.view.bounds.size.height - itemSize.height
+        scrollerFrame.origin.y = statusBarHeight
 
         self.scroller = HScroller(frame: scrollerFrame)
         self.scroller.delegate = self
         self.scroller.itemSize = itemSize
         self.scroller.registerClass(CardCell.self)
+
+        //
+        // Card View
+        //
+        self.cardView = CardView()
+        self.cardView.transform = CardView.transformThatFits(self.view.bounds.size)
+        self.cardView.frame.origin.y = self.scroller.frame.maxY
+
+        self.view.addSubview(self.cardView)
         self.view.addSubview(self.scroller)
 
         // FIXME: Temp
@@ -120,6 +128,8 @@ public class CardViewController: UIViewController {
 }
 
 
+// MARK: - PeerDelegate
+
 extension CardViewController: PeerDelegate {
 
     public func peerDidBecomeActive(peer: Peer) {
@@ -147,6 +157,8 @@ extension CardViewController: PeerDelegate {
 }
 
 
+// MARK: - HScrollerDelegate
+
 extension CardViewController: HScrollerDelegate {
 
     public func numberOfItemsInScroller(scroller: HScroller) -> Int {
@@ -160,5 +172,5 @@ extension CardViewController: HScrollerDelegate {
             cell.card = packet.card
         }
     }
-    
+
 }
