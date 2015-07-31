@@ -16,14 +16,15 @@ public final class CardView: UIView {
     }
 
     internal struct Font {
-        static let nameLabel = UIFont.systemFontOfSize(idiom(80, 160))
-        static let cardLabel = UIFont.systemFontOfSize(idiom(120, 240))
+        static let nameLabel = UIFont.boldSystemFontOfSize(idiom(80, 160))
+        static let cardLabel = UIFont.boldSystemFontOfSize(idiom(150, 240))
     }
 
     internal struct Color {
         static let shadow = 0x0~50%
         static let background = 0xEDEDED~
         static let border = 0xCCCCCC~
+        static let cardLabelText = 0x282828~
     }
 
 
@@ -103,6 +104,7 @@ public final class CardView: UIView {
         self.cardLabel.bounds.size.width = self.bounds.width
         self.cardLabel.center.x = self.bounds.width / 2
         self.cardLabel.center.y = (self.bounds.height + self.nameLabel.bounds.height) / 2
+        self.cardLabel.textColor = Color.cardLabelText
     }
 
 
