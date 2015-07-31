@@ -36,7 +36,7 @@ public enum Card: Int {
         switch self {
             case .Half: return "0.5"
             case .QuestionMark: return "?"
-            case .Coffee: return "Coffee"
+            case .Coffee: return "☕️"
             case .None: return "None"
             default: return String(self.rawValue)
         }
