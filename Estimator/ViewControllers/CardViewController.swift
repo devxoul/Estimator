@@ -207,6 +207,16 @@ extension CardViewController: UIGestureRecognizerDelegate {
             let origin = self.view.frame.height - self.cardView.frame.height
             self.cardView.frame.origin.y = origin + delta / 1.5
 
+        case .Ended:
+            guard let gestureRecognizer = gestureRecognizer as? UIPanGestureRecognizer else { fallthrough }
+            let point = gestureRecognizer.locationInView(self.view)
+            let origin = self.view.frame.height - self.cardView.frame.height
+            let delta = point.y - origin
+            let velocity = gestureRecognizer.velocityInView(self.view)
+            if delta >= 400 || velocity.y >= 3000 {
+                self.dismissViewControllerAnimated(true, completion: nil)
+            }
+
         case .Ended, .Cancelled:
             UIView.animateWithDuration(0.5,
                 delay: 0,
