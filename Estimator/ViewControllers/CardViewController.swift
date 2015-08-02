@@ -31,6 +31,8 @@ public class CardViewController: UIViewController {
 
     private var transitionAnimator: BlurTransitionAnimator!
 
+    private var panBeganLocationInCardView: CGFloat?
+
 
     public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -83,9 +85,17 @@ public class CardViewController: UIViewController {
         self.view.addSubview(self.cardView)
         self.view.addSubview(self.scroller)
 
-        // FIXME: Temp
-        let tapRecognizer = UITapGestureRecognizer(target: self, action: "backgroundDidTap")
-        self.view.addGestureRecognizer(tapRecognizer)
+        //
+        // Gesture Recognizer
+        //
+        let panRecognizer = UIPanGestureRecognizer(target: self, action: "gestureRecognizerHandler:")
+        panRecognizer.maximumNumberOfTouches = 1
+        panRecognizer.delegate = self
+        self.view.addGestureRecognizer(panRecognizer)
+
+        let pressRecognizer = UILongPressGestureRecognizer(target: self, action: "gestureRecognizerHandler:")
+        pressRecognizer.minimumPressDuration = 0.0001
+        self.view.addGestureRecognizer(pressRecognizer)
     }
 
     public required init?(coder aDecoder: NSCoder) {
@@ -100,10 +110,6 @@ public class CardViewController: UIViewController {
 
     public override func viewDidDisappear(animated: Bool) {
         self.peer.stopBroadcasting()
-    }
-
-    public func backgroundDidTap() {
-        self.dismissViewControllerAnimated(true, completion: nil)
     }
 
     internal func cardDidSet() {
@@ -171,6 +177,58 @@ extension CardViewController: HScrollerDelegate {
             cell.name = packet.name
             cell.card = packet.card
         }
+    }
+
+}
+
+
+// MARK: - GestureRecognizer
+
+extension CardViewController: UIGestureRecognizerDelegate {
+
+    public func gestureRecognizerHandler(gestureRecognizer: UIGestureRecognizer) {
+        switch gestureRecognizer.state {
+        case .Began:
+            if gestureRecognizer is UILongPressGestureRecognizer {
+                guard let presentationLayer = self.cardView.layer.presentationLayer() as? CALayer else { break }
+                let currentY = presentationLayer.frame.minY
+                self.cardView.layer.removeAllAnimations()
+                self.cardView.frame.origin.y = currentY
+            } else if gestureRecognizer is UIPanGestureRecognizer {
+                self.panBeganLocationInCardView = gestureRecognizer.locationInView(self.cardView).y
+            }
+
+        case .Changed:
+            guard gestureRecognizer is UIPanGestureRecognizer else { break }
+            guard let offset = self.panBeganLocationInCardView else { break }
+            let point = gestureRecognizer.locationInView(self.view)
+            let target = point.y - offset
+            let delta = target - self.cardView.frame.origin.y
+            let origin = self.view.frame.height - self.cardView.frame.height
+            self.cardView.frame.origin.y = origin + delta / 1.5
+
+        case .Ended, .Cancelled:
+            UIView.animateWithDuration(0.5,
+                delay: 0,
+                usingSpringWithDamping: 500,
+                initialSpringVelocity: 0,
+                options: [.CurveEaseInOut, .AllowUserInteraction],
+                animations: {
+                    self.cardView.frame.origin.y = self.view.frame.height - self.cardView.frame.height
+                },
+                completion: { _ in
+                    self.panBeganLocationInCardView = nil
+                }
+            )
+
+        default: break
+        }
+    }
+
+    public func gestureRecognizer(gestureRecognizer: UIGestureRecognizer,
+                                  shouldRecognizeSimultaneouslyWithGestureRecognizer
+                                  otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
     }
 
 }
