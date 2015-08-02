@@ -214,7 +214,8 @@ extension CardViewController: UIGestureRecognizerDelegate {
             let origin = self.view.frame.height - self.cardView.frame.height
             let delta = point.y - origin
             let velocity = gestureRecognizer.velocityInView(self.view)
-            if delta >= 400 || velocity.y >= 3000 {
+            print("delta: \(delta), velocity: \(velocity.y)")
+            if delta >= 400 || velocity.y >= 1500 {
                 self.dismissViewControllerAnimated(true, completion: nil)
             }
 
