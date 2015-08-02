@@ -49,23 +49,21 @@ public class Peer: NSObject {
 
     // MARK: Broadcasting
 
-    public func startBroadcasting(card: Card) {
-        if let channel = self.channel, name = self.name {
-            let packet = Packet(channel: channel, name: name, card: card)
-            self.startBroadcasting(packet)
-        } else {
-            if self.channel == nil {
-                NSLog("[WARNING] Channel is nil.")
-            }
-            if self.name == nil {
-                NSLog("[WARNING] Name is nil.")
-            }
-            NSLog("[WARNING] Skip broadcasting.")
+    public func broadcast(card: Card) {
+        guard let channel = self.channel else {
+            NSLog("[WARNING] Channel is nil. Skip broadcasting.")
+            return
         }
+        guard let name = self.name else {
+            NSLog("[WARNING] Name is nil. Skip broadcasting.")
+            return
+        }
+        let packet = Packet(channel: channel, name: name, card: card)
+        self.broadcast(packet)
     }
 
-    public func startBroadcasting(packet: Packet) {
-        if !self.active {
+    public func broadcast(packet: Packet) {
+        guard self.active else {
             NSLog("[WARNING] Peer is not active. Skip broadcasting.")
             return
         }

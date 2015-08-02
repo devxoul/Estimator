@@ -105,7 +105,7 @@ public class CardViewController: UIViewController {
     public override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         self.garbageCollector.invalidate()
-        self.peer.startBroadcasting(.None)
+        self.peer.broadcast(.None)
     }
 
     public override func viewDidDisappear(animated: Bool) {
@@ -140,7 +140,8 @@ extension CardViewController: PeerDelegate {
 
     public func peerDidBecomeActive(peer: Peer) {
         if let card = self.card {
-            self.peer.startBroadcasting(card)
+            self.peer.broadcast(card)
+            self.peer.listen()
         }
     }
 
