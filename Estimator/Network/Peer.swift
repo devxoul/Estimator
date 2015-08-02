@@ -21,17 +21,14 @@ public class Peer: NSObject {
     public var channel: String?
     public var name: String?
 
-    private var _active = false {
-        didSet {
-            if self._active && !oldValue {
-                self.delegate?.peerDidBecomeActive(self)
-            } else if !self._active && oldValue {
-                self.delegate?.peerDidBecomeInactive(self)
-            }
-        }
+    private var isPeripheralActive = false {
+        didSet { self.delegateActivationIfNeeded(oldValue && self.isCentralActive) }
+    }
+    private var isCentralActive = false {
+        didSet { self.delegateActivationIfNeeded(oldValue && self.isPeripheralActive) }
     }
     public var active: Bool {
-        return self._active
+        return self.isPeripheralActive && self.isCentralActive
     }
 
     public var currentPacket: Packet?
@@ -48,6 +45,9 @@ public class Peer: NSObject {
         self.channel = channel
         self.name = name
     }
+
+
+    // MARK: Broadcasting
 
     public func startBroadcasting(card: Card) {
         if let channel = self.channel, name = self.name {
@@ -82,6 +82,35 @@ public class Peer: NSObject {
         self.peripheral.stopAdvertising()
     }
 
+
+    // MARK: Listening
+
+    public func listen() -> Bool {
+        guard self.isCentralActive else {
+            NSLog("[WARNING] Peer is not active. Skip listening.")
+            return false
+        }
+        let serviceUUID = CBUUID(string: serviceUUIDString)
+        let options = [CBCentralManagerScanOptionAllowDuplicatesKey: true]
+        self.central.scanForPeripheralsWithServices([serviceUUID], options: options)
+        return true
+    }
+
+    public func stopListening() {
+        self.central.stopScan()
+    }
+
+
+    // MARK: Active
+
+    private func delegateActivationIfNeeded(wasActive: Bool) {
+        if !wasActive && self.active {
+            self.delegate?.peerDidBecomeActive(self)
+        } else if wasActive && !self.active {
+            self.delegate?.peerDidBecomeInactive(self)
+        }
+    }
+
 }
 
 
@@ -102,7 +131,7 @@ extension Peer: CBPeripheralManagerDelegate {
     public func peripheralManager(peripheral: CBPeripheralManager,
                                   didAddService service: CBService,
                                   error: NSError?) {
-        self._active = true
+        self.isPeripheralActive = true
     }
 
     public func peripheralManagerDidStartAdvertising(peripheral: CBPeripheralManager, error: NSError?) {
@@ -117,9 +146,7 @@ extension Peer: CBCentralManagerDelegate {
     public func centralManagerDidUpdateState(central: CBCentralManager) {
         switch central.state {
         case .PoweredOn:
-            let serviceUUID = CBUUID(string: serviceUUIDString)
-            let options = [CBCentralManagerScanOptionAllowDuplicatesKey: true]
-            central.scanForPeripheralsWithServices([serviceUUID], options: options)
+            self.isCentralActive = true
 
         default:
             break
