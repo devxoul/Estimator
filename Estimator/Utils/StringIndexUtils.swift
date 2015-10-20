@@ -14,8 +14,8 @@ extension String {
         guard range.startIndex < self.characters.count else {
             return nil
         }
-        let startIndex = advance(self.startIndex, range.startIndex)
-        let endIndex = advance(startIndex, range.endIndex - range.startIndex)
+        let startIndex = self.startIndex.advancedBy(range.startIndex)
+        let endIndex = startIndex.advancedBy(range.endIndex - range.startIndex)
         return self.substringWithRange(startIndex..<endIndex)
     }
 
@@ -33,10 +33,10 @@ public func ... (lhs: String.Index, rhs: Int) -> Range<String.Index> {
 
 infix operator + {}
 public func + (lhs: String.Index, rhs: Int) -> String.Index {
-    return advance(lhs, rhs)
+    return lhs.advancedBy(rhs)
 }
 
 infix operator - {}
 public func - (lhs: String.Index, rhs: Int) -> String.Index {
-    return advance(lhs, -rhs)
+    return lhs.advancedBy(-rhs)
 }

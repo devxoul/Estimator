@@ -76,7 +76,7 @@ public final class CardView: UIView {
     }
 
     public convenience init() {
-        self.init(frame: CGRect(origin: CGPoint.zeroPoint, size: self.dynamicType.standardSize))
+        self.init(frame: CGRect(origin: .zero, size: self.dynamicType.standardSize))
     }
 
     public required init?(coder aDecoder: NSCoder) {

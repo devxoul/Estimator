@@ -174,7 +174,7 @@ extension CardViewController: HScrollerDelegate {
 
     public func scroller(scroller: HScroller, needsConfigureCell rawCell: UICollectionViewCell, atIndex index: Int) {
         if let cell = rawCell as? CardCell {
-            let packet = self.receivedPacketsByName.values.array[index]
+            let packet = Array(self.receivedPacketsByName.values)[index]
             cell.name = packet.name
             cell.card = packet.card
         }

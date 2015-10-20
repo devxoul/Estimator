@@ -42,12 +42,12 @@ public struct Packet: Equatable {
         self.version = version
         self.channel = channel
         self.card = Card(rawValue: cardRawValue)
-        self.name = encoded.substringFromIndex(advance(encoded.startIndex, 6))
+        self.name = encoded.substringFromIndex(encoded.startIndex.advancedBy(6))
     }
 
     public func encode() -> String {
         let components = [self.version, self.channel, self.card?.hexValue, self.name].map { $0 ?? "" }
-        return "".join(components)
+        return components.joinWithSeparator("")
     }
 
 }
@@ -57,7 +57,7 @@ extension Packet: CustomStringConvertible {
 
     public var description: String {
         let components = [self.version, self.channel, self.card?.description, self.name].map { $0 ?? "" }
-        return ", ".join(components)
+        return components.joinWithSeparator(", ")
     }
 
 }
