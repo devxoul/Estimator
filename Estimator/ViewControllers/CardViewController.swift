@@ -57,6 +57,13 @@ public class CardViewController: UIViewController {
         NSRunLoop.currentRunLoop().addTimer(self.garbageCollector, forMode: NSRunLoopCommonModes)
 
         //
+        // Card View
+        //
+        self.cardView = CardView()
+        self.cardView.transform = CardView.transformThatFits(self.view.bounds.size)
+        self.cardView.frame.origin.y = self.view.frame.height - self.cardView.frame.height
+
+        //
         // Scroller
         //
         let itemSize = CGSizeApplyAffineTransform(
@@ -64,23 +71,14 @@ public class CardViewController: UIViewController {
             CardView.transformThatFitsHeight(Metric.scrollerItemHeight)
         )
 
-        let statusBarHeight = UIApplication.sharedApplication().statusBarFrame.height
-
         var scrollerFrame = self.view.bounds
         scrollerFrame.size.height = itemSize.height
-        scrollerFrame.origin.y = statusBarHeight
+        scrollerFrame.origin.y = self.cardView.frame.origin.y - itemSize.height
 
         self.scroller = HScroller(frame: scrollerFrame)
         self.scroller.delegate = self
         self.scroller.itemSize = itemSize
         self.scroller.registerClass(CardCell.self)
-
-        //
-        // Card View
-        //
-        self.cardView = CardView()
-        self.cardView.transform = CardView.transformThatFits(self.view.bounds.size)
-        self.cardView.frame.origin.y = self.scroller.frame.maxY
 
         self.view.addSubview(self.cardView)
         self.view.addSubview(self.scroller)
