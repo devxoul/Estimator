@@ -11,20 +11,20 @@ import UIKit
 public final class CardView: UIView {
 
     internal struct Metric {
-        static let borderWidth = 1.f
-        static let cornerRadius = 10.f
+        static let borderWidth = 1 / UIScreen.mainScreen().scale
+        static let cornerRadius = 5.f
     }
 
     internal struct Font {
         static let nameLabel = UIFont.boldSystemFontOfSize(idiom(80, 160))
-        static let cardLabel = UIFont.boldSystemFontOfSize(idiom(150, 240))
+        static let cardLabel = UIFont.boldSystemFontOfSize(idiom(130, 240))
     }
 
     internal struct Color {
-        static let shadow = 0x0~50%
-        static let background = 0xEDEDED~
+        static let shadow = 0x0~25%
+        static let background = 0xF1F1F1~
         static let border = 0xCCCCCC~
-        static let cardLabelText = 0x282828~
+        static let cardLabelText = 0x222222~
     }
 
 

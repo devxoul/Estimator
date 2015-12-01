@@ -30,7 +30,12 @@ extension BlurTransitionAnimator: UIViewControllerTransitioningDelegate {
     }
 
     public func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
-        return 0.5
+        let viewController = transitionContext!.viewControllerForKey(UITransitionContextToViewControllerKey)!
+        if viewController.isBeingPresented() {
+            return 0.5
+        } else {
+            return 0.4
+        }
     }
 
 }
@@ -61,7 +66,7 @@ extension BlurTransitionAnimator: UIViewControllerAnimatedTransitioning {
             self.screenshotView.frame.origin.y = statusBarHeight == 20 ? 0 : -40
             fromViewController.view.addSubview(self.screenshotView)
 
-            self.dimView.backgroundColor = UIColor.blackColor() ~ 50%
+            self.dimView.backgroundColor = 0x222222 ~ 35%
             self.dimView.frame = self.screenshotView.bounds
             self.screenshotView.addSubview(self.dimView)
 
@@ -69,7 +74,7 @@ extension BlurTransitionAnimator: UIViewControllerAnimatedTransitioning {
             containerView.addSubview(toViewController.view)
             UIView.animateWithDuration(duration,
                 delay: 0,
-                usingSpringWithDamping: 500,
+                usingSpringWithDamping: 1,
                 initialSpringVelocity: 0,
                 options: [],
                 animations: {
@@ -84,7 +89,7 @@ extension BlurTransitionAnimator: UIViewControllerAnimatedTransitioning {
             containerView.addSubview(fromViewController.view)
             UIView.animateWithDuration(duration,
                 delay: 0,
-                usingSpringWithDamping: 500,
+                usingSpringWithDamping: 1,
                 initialSpringVelocity: 0,
                 options: [],
                 animations: {
