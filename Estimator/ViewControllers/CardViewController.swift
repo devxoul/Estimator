@@ -73,11 +73,12 @@ public class CardViewController: UIViewController {
 
         var scrollerFrame = self.view.bounds
         scrollerFrame.size.height = itemSize.height
-        scrollerFrame.origin.y = self.cardView.frame.origin.y - itemSize.height
+        scrollerFrame.origin.y = self.cardView.frame.origin.y - itemSize.height - 1
 
         self.scroller = HScroller(frame: scrollerFrame)
         self.scroller.delegate = self
         self.scroller.itemSize = itemSize
+        self.scroller.itemSpacing = 1
         self.scroller.registerClass(CardCell.self)
 
         self.view.addSubview(self.cardView)
@@ -89,11 +90,11 @@ public class CardViewController: UIViewController {
         let panRecognizer = UIPanGestureRecognizer(target: self, action: "gestureRecognizerHandler:")
         panRecognizer.maximumNumberOfTouches = 1
         panRecognizer.delegate = self
-        self.view.addGestureRecognizer(panRecognizer)
+        self.cardView.addGestureRecognizer(panRecognizer)
 
         let pressRecognizer = UILongPressGestureRecognizer(target: self, action: "gestureRecognizerHandler:")
         pressRecognizer.minimumPressDuration = 0.0001
-        self.view.addGestureRecognizer(pressRecognizer)
+        self.cardView.addGestureRecognizer(pressRecognizer)
     }
 
     public required init?(coder aDecoder: NSCoder) {
@@ -205,6 +206,7 @@ extension CardViewController: UIGestureRecognizerDelegate {
             let delta = target - self.cardView.frame.origin.y
             let origin = self.view.frame.height - self.cardView.frame.height
             self.cardView.frame.origin.y = origin + delta / 1.5
+            self.scroller.frame.origin.y = self.cardView.frame.origin.y - self.scroller.itemSize.height - 1
 
         case .Ended:
             guard let gestureRecognizer = gestureRecognizer as? UIPanGestureRecognizer else { fallthrough }
@@ -225,6 +227,7 @@ extension CardViewController: UIGestureRecognizerDelegate {
                 options: [.CurveEaseInOut, .AllowUserInteraction],
                 animations: {
                     self.cardView.frame.origin.y = self.view.frame.height - self.cardView.frame.height
+                    self.scroller.frame.origin.y = self.cardView.frame.origin.y - self.scroller.itemSize.height - 1
                 },
                 completion: { _ in
                     self.panBeganLocationInCardView = nil
