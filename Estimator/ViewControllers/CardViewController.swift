@@ -75,6 +75,12 @@ public class CardViewController: UIViewController {
         scrollerFrame.size.height = itemSize.height
         scrollerFrame.origin.y = self.cardView.frame.origin.y - itemSize.height - 1
 
+        if scrollerFrame.origin.y < 0 {
+            self.cardView.frame.size.height -= abs(scrollerFrame.origin.y) + 20
+            self.cardView.frame.origin.y = self.view.frame.height - self.cardView.frame.height
+            scrollerFrame.origin.y = self.cardView.frame.origin.y - itemSize.height - 1
+        }
+
         self.scroller = HScroller(frame: scrollerFrame)
         self.scroller.delegate = self
         self.scroller.itemSize = itemSize
